@@ -10,7 +10,7 @@ Summit is also a structured Go and Wails learning project. Each feature introduc
 
 ## Project status
 
-Summit is currently in the planning and bootstrap stage. The repository contains the product roadmap and detailed implementation checklists; the application scaffold has not been created yet.
+Summit is in its bootstrap stage. The Wails v3 React/TypeScript scaffold is present, while the Phase 0 GPX parser, analysis packages, and CLI are the next implementation milestone.
 
 The first usable milestone is:
 
@@ -49,7 +49,7 @@ Summit keeps domain and geospatial logic in Go. React and TypeScript handle pres
 
 ```text
 React / TypeScript
-  UI · MapLibre · SVG charts · forms · selection state
+  Mantine UI · MapLibre · SVG charts · Zustand interaction state
                        │
                        │ generated Wails bindings
                        ▼
@@ -73,11 +73,11 @@ Local data
 
 ### React and TypeScript own
 
-- Application rendering and controls
+- Application rendering and controls through Mantine
 - MapLibre integration
 - Responsive SVG charts
-- Forms and accessible interaction
-- Hover and selection state
+- Forms and accessible interaction through Mantine Form
+- Shared hover and selection state through Zustand
 - Purely visual transformations
 
 When logic could reasonably live in either layer, prefer Go unless the behavior is purely visual.
@@ -87,6 +87,8 @@ When logic could reasonably live in either layer, prefer Go unless the behavior 
 - [Go](https://go.dev/) for the domain, application, storage, and CLI layers
 - [Wails v3](https://v3.wails.io/) for the desktop application and Go/TypeScript bridge
 - [React](https://react.dev/) and TypeScript for the frontend
+- [Mantine](https://mantine.dev/) for application components, layout, forms, feedback, and theming
+- [Zustand](https://zustand.docs.pmnd.rs/) for shared map/chart interaction state
 - [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/) for map rendering
 - [SQLite](https://www.sqlite.org/) through `database/sql` for the local track library
 - [SRTM HGT](https://lpdaac.usgs.gov/documents/179/SRTM_User_Guide_V3.pdf) for local terrain elevation
@@ -115,11 +117,11 @@ Read the documents in this order:
 
 ## Getting started
 
-The repository is not runnable yet. To start Phase 0, prepare:
+To run the scaffold and start Phase 0, prepare:
 
 - macOS on Apple Silicon for the primary development environment
 - Go 1.25 or newer
-- Node.js and npm
+- Node.js and pnpm
 - Xcode command-line tools
 - Git
 - The Wails v3 CLI
@@ -136,7 +138,16 @@ Verify the desktop toolchain:
 wails3 doctor
 ```
 
-Then follow the bootstrap and Phase 0 sections in the [first implementation checklist](docs/summit-phases-0-8-todo.md). That checklist is the source of truth for scaffold commands, module naming, required fixtures, tests, and the phase completion gate.
+Install frontend dependencies and start the Wails development build:
+
+```bash
+cd frontend
+pnpm install
+cd ..
+wails3 dev
+```
+
+Then follow Phase 0 in the [first implementation checklist](docs/summit-phases-0-8-todo.md). That checklist is the source of truth for required fixtures, tests, and the phase completion gate.
 
 The first planned CLI flow is:
 
@@ -160,6 +171,8 @@ Maximum: 1,694 m
 
 - Build one complete vertical slice before generalizing it.
 - Keep framework code at the edges.
+- Use Mantine components and theme tokens for ordinary application UI; reserve custom CSS for MapLibre and specialized SVG behavior.
+- Keep shared frontend interaction state in a small typed Zustand store and leave Go authoritative for domain data.
 - Preserve original imported files.
 - Represent missing GPS and terrain values explicitly; never turn missing data into zero.
 - Recompute cheap derived statistics instead of persisting every result.
@@ -184,15 +197,20 @@ The application is local-first. Geography and track analysis remain the center o
 
 ## Repository layout
 
-The current repository contains planning documents only:
+The current repository contains the Wails scaffold and planning documents:
 
 ```text
 .
-├── README.md
-└── docs/
+├── build/
+├── docs/
     ├── summit-roadmap.md
     ├── summit-phases-0-8-todo.md
     └── summit-phases-9-16-todo.md
+├── frontend/
+├── go.mod
+├── main.go
+├── README.md
+└── Taskfile.yml
 ```
 
-The application, CLI, Go packages, frontend, fixtures, and build configuration will be introduced as the implementation checklists progress.
+The generated greeting service will be replaced as the CLI, domain packages, fixtures, and Summit application services are introduced through the implementation checklists.

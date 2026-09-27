@@ -27,6 +27,10 @@ Use `In progress`, `Blocked`, or `Complete` in the status column. Add a date onl
 - [ ] Continue with the pinned Wails v3 beta version; do not update it incidentally during a feature phase.
 - [ ] Keep geospatial, filesystem, persistence, import/export, caching, and concurrency logic in Go.
 - [ ] Keep MapLibre/SVG rendering, forms, and visual selection state in React/TypeScript.
+- [ ] Use Mantine for application layout, forms, dialogs, notifications, tables, menus, loading states, spacing, and theming.
+- [ ] Use Zustand for shared track, map, chart, segment, terrain-profile, and basemap interaction state.
+- [ ] Keep isolated component state in React and substantial form state in Mantine Form.
+- [ ] Limit hand-written CSS to MapLibre integration and specialized SVG chart behavior.
 - [ ] Use metric base units and metric display units.
 - [ ] Keep original imported files immutable.
 - [ ] Store large managed source files outside SQLite and store their metadata in SQLite.
@@ -72,6 +76,19 @@ Use `In progress`, `Blocked`, or `Complete` in the status column. Add a date onl
 - [Wails v3 application menus](https://v3.wails.io/features/menus/application/)
 - [Wails v3 macOS packaging](https://v3.wails.io/guides/build/macos/)
 - [Wails v3 updater tutorial](https://v3.wails.io/tutorials/04-self-update-a-wails-app/)
+- [Mantine](https://mantine.dev/)
+- [Mantine Form](https://mantine.dev/form/package/)
+- [Mantine notifications](https://mantine.dev/x/notifications/)
+- [Zustand](https://zustand.docs.pmnd.rs/)
+
+## Frontend implementation rule
+
+- [ ] Build ordinary UI from Mantine components before considering a custom component.
+- [ ] Use the centralized Summit theme and Mantine spacing/color/typography tokens rather than page-specific CSS.
+- [ ] Use Mantine Form for waypoint and import/export forms, Mantine modals for confirmation, and Mantine notifications/alerts for operation results.
+- [ ] Use Zustand selectors/actions for state shared between the map, SVG profile, lists, and tool panels.
+- [ ] Keep Wails/Go results authoritative; do not turn Zustand into a second domain database.
+- [ ] Retain the custom SVG elevation renderer and MapLibre layers because their indexed interaction and rendering requirements are application-specific.
 
 ---
 
@@ -417,6 +434,7 @@ Users can import, create, edit, move, filter, associate, and delete geographic w
 
 - [ ] Add `Create Waypoint` mode and cursor state.
 - [ ] Create at the clicked coordinate, then open a compact editor.
+- [ ] Build the editor with Mantine Form and Mantine inputs/selects/textarea inside a Drawer or Modal.
 - [ ] Default type to Custom and leave elevation unavailable unless deliberately filled.
 - [ ] Add name, type, notes, track association, coordinate, and elevation display fields.
 - [ ] Add an explicit `Use terrain elevation` action using Phase 9 coverage.
@@ -511,7 +529,7 @@ Summit imports track-like GeoJSON points and lines into the same library and ana
 
 - [ ] Add GeoJSON filters to native open/import dialogs.
 - [ ] Route `.geojson` and `.json` drops to GeoJSON parsing.
-- [ ] Show a preview/import summary for multi-feature files.
+- [ ] Show a Mantine modal or drawer preview/import summary for multi-feature files.
 - [ ] Clearly identify unsupported polygon/collection features.
 - [ ] Load imported line tracks through the existing map/profile/analysis UI.
 - [ ] Load imported point features through the waypoint UI.
@@ -612,6 +630,7 @@ Users can import a lawful PMTiles archive, choose it as a basemap, and use Summi
 ## UI
 
 - [ ] Add import, list, select, inspect, rename-display-name, and remove controls.
+- [ ] Use Mantine tables/lists, modals, alerts, and notifications rather than custom-styled equivalents.
 - [ ] Display archive bounds, zoom range, size, format, attribution, and support status.
 - [ ] Fit to archive bounds only through an explicit action.
 - [ ] Indicate clearly when Summit is using a fully local basemap.
@@ -722,7 +741,7 @@ Users can export a selected library track and its waypoints as GPX or GeoJSON, o
 ## UI
 
 - [ ] Add export from the selected track and native File menu.
-- [ ] Show format description and elevation-source choice.
+- [ ] Use Mantine Form controls for format description and elevation-source choice.
 - [ ] Disable unavailable elevation choices with an explanation.
 - [ ] Show success with target filename and failure with retry.
 - [ ] Keep PNG snapshot visibly out of scope rather than presenting a disabled promise.
@@ -937,6 +956,8 @@ For every migration:
 - [ ] Confirm regeneration is idempotent.
 - [ ] Run frontend tests and TypeScript type checking.
 - [ ] Run the production frontend build and `wails3 build`.
+- [ ] Confirm ordinary UI uses Mantine/theme tokens and introduces no avoidable custom CSS.
+- [ ] Confirm Zustand selectors keep high-frequency map/chart interaction scoped to relevant subscribers.
 - [ ] Exercise the phase's manual workflow in `wails3 dev` and a packaged build where required.
 - [ ] Update progress and completion date.
 - [ ] Commit at a reviewable boundary.

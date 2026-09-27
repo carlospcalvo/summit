@@ -6,17 +6,17 @@ The high-level product direction remains in [`summit-roadmap.md`](./summit-roadm
 
 ## Progress
 
-| Phase | Outcome | Status | Completed |
-| --- | --- | --- | --- |
-| 0 | GPX inspection CLI and tested Go domain foundation | Not started | — |
-| 1 | Wails app opens one GPX and displays statistics | Not started | — |
-| 2 | Clear package and dependency boundaries | Not started | — |
-| 3 | Interactive elevation profile | Not started | — |
-| 4 | MapLibre map synchronized with the profile | Not started | — |
-| 5 | Fixed-distance track segmentation | Not started | — |
-| 6 | Persistent local SQLite track library | Not started | — |
-| 7 | Concurrent bulk import with progress and cancellation | Not started | — |
-| 8 | Hiking-focused time, speed, grade, smoothing, and outlier analysis | Not started | — |
+| Phase | Outcome                                                            | Status      | Completed |
+| ----- | ------------------------------------------------------------------ | ----------- | --------- |
+| 0     | GPX inspection CLI and tested Go domain foundation                 | Not started | —         |
+| 1     | Wails app opens one GPX and displays statistics                    | Not started | —         |
+| 2     | Clear package and dependency boundaries                            | Not started | —         |
+| 3     | Interactive elevation profile                                      | Not started | —         |
+| 4     | MapLibre map synchronized with the profile                         | Not started | —         |
+| 5     | Fixed-distance track segmentation                                  | Not started | —         |
+| 6     | Persistent local SQLite track library                              | Not started | —         |
+| 7     | Concurrent bulk import with progress and cancellation              | Not started | —         |
+| 8     | Hiking-focused time, speed, grade, smoothing, and outlier analysis | Not started | —         |
 
 Update the status to `In progress`, `Blocked`, or `Complete` as work advances. Add the completion date only after the phase gate passes.
 
@@ -26,13 +26,15 @@ Update the status to `In progress`, `Blocked`, or `Complete` as work advances. A
 
 - [ ] Use the Go module path `github.com/carlospcalvo/summit`.
 - [ ] Use Wails v3 beta and pin the resolved version in `go.mod` and `go.sum`.
-- [ ] Use the Wails React + TypeScript template, Vite, npm, and `package-lock.json`.
+- [ ] Use the Wails React + TypeScript template, Vite, pnpm, and `pnpm-lock.yaml`.
 - [ ] Develop and accept on Apple Silicon macOS first; keep ordinary application code portable.
 - [ ] Use metric units only through Phase 8: metres, kilometres, km/h, and min/km.
 - [ ] Tune Phase 8 defaults for hiking and trail running.
 - [ ] Keep filesystem, parsing, calculations, persistence, and concurrency in Go.
 - [ ] Keep rendering, pointer/keyboard interaction, and shared view-selection state in React.
-- [ ] Use plain React hooks and CSS rather than adding an application state or CSS framework.
+- [ ] Use Mantine as the sole application component, layout, form, feedback, and theming system.
+- [ ] Use Zustand for shared track/map/chart interaction state; keep isolated component state in React and substantial form state in Mantine Form.
+- [ ] Limit hand-written CSS to MapLibre's required stylesheet/container rules and specialized SVG chart behavior.
 - [ ] Render the elevation chart as responsive SVG rather than adding a chart dependency.
 - [ ] Use MapLibre GL JS v6 for the map.
 - [ ] Use `database/sql` with `modernc.org/sqlite` for the local library.
@@ -49,6 +51,10 @@ Update the status to `In progress`, `Blocked`, or `Complete` as work advances. A
 - [Wails v3 file dialogs](https://v3.wails.io/features/dialogs/file/)
 - [Wails v3 events](https://v3.wails.io/reference/events/)
 - [MapLibre GL JS](https://maplibre.org/maplibre-gl-js/docs/)
+- [Mantine](https://mantine.dev/)
+- [Mantine AppShell](https://mantine.dev/core/app-shell/)
+- [Mantine Form](https://mantine.dev/form/package/)
+- [Zustand](https://zustand.docs.pmnd.rs/)
 - [`modernc.org/sqlite`](https://pkg.go.dev/modernc.org/sqlite)
 
 Wails v3 is beta software. If an example here differs from the pinned version, inspect `wails3 <command> --help` and the documentation for that exact version. Adapt the call site without changing the architecture or phase outcome.
@@ -72,11 +78,11 @@ Wails v3 is beta software. If an example here differs from the pinned version, i
   go version
   ```
 
-- [ ] Confirm Node and npm:
+- [ ] Confirm Node and pnpm:
 
   ```bash
   node --version
-  npm --version
+  pnpm --version
   ```
 
 - [ ] Confirm Xcode command-line tools:
@@ -93,7 +99,7 @@ Wails v3 is beta software. If an example here differs from the pinned version, i
 
 - [ ] Ensure Go's binary directory is on `PATH`.
 - [ ] Run `wails3 doctor` and resolve required failures before scaffolding.
-- [ ] Record the outputs of `go version`, `node --version`, `npm --version`, and `wails3 version` in the first setup commit or project notes.
+- [ ] Record the outputs of `go version`, `node --version`, `pnpm --version`, and `wails3 version` in the first setup commit or project notes.
 
 ### Repository safety
 
@@ -119,8 +125,8 @@ Wails v3 is beta software. If an example here differs from the pinned version, i
 
 - [ ] Copy the generated files into this repository, remove only the temporary scaffold directory, and inspect the diff.
 - [ ] Confirm `go.mod` contains the intended module path.
-- [ ] Run `npm install` in the generated frontend directory if the template did not already do so.
-- [ ] Commit `go.mod`, `go.sum`, `package.json`, and `package-lock.json`; do not leave dependency versions floating.
+- [ ] Run `pnpm install` in the generated frontend directory if the template did not already do so.
+- [ ] Commit `go.mod`, `go.sum`, `package.json`, and `pnpm-lock.yaml`; do not leave dependency versions floating.
 - [ ] Start the unmodified scaffold with `wails3 dev` and verify that a desktop window opens.
 - [ ] Build it once with `wails3 build`.
 
@@ -333,22 +339,28 @@ The desktop application opens one GPX file through a native dialog and displays 
 ## React UI
 
 - [ ] Remove the Wails greeting/demo UI.
-- [ ] Add a simple shell with application title and main content area.
-- [ ] Add an `Open GPX File` button.
+- [ ] Install and pin `@mantine/core`, `@mantine/hooks`, `@mantine/form`, `@mantine/notifications`, `@tabler/icons-react`, and `zustand`.
+- [ ] Import Mantine's required package styles once at the frontend entry point and in the documented order.
+- [ ] Create one centralized Summit theme with compact desktop spacing, accessible focus behavior, light/dark color schemes, and component defaults.
+- [ ] Wrap the application once with `MantineProvider` and render one `Notifications` host inside it.
+- [ ] Build the shell with `AppShell`, including application title and main content area.
+- [ ] Add an `Open GPX File` Mantine button with a Tabler icon.
 - [ ] Disable duplicate opens while a request is pending.
-- [ ] Show a loading indicator with text that remains understandable without animation.
+- [ ] Show a Mantine loading indicator or skeleton with text that remains understandable without animation.
 - [ ] Preserve the previous result if the user cancels the file dialog.
-- [ ] Show an empty state before the first successful open.
-- [ ] Show track name, points, distance, gain, loss, minimum, and maximum after success.
+- [ ] Show a Mantine-composed empty state before the first successful open.
+- [ ] Show track name, points, distance, gain, loss, minimum, and maximum with Mantine typography, groups, and cards.
 - [ ] Render unavailable elevation values as `—` or `n/a` consistently.
 - [ ] Format base-unit values in TypeScript only for presentation; do not recalculate statistics.
-- [ ] Catch rejected binding promises and render a concise error with a retry/open action.
+- [ ] Catch rejected binding promises and render a Mantine alert/notification with a retry/open action.
 - [ ] Make the button and statistics usable with keyboard navigation and screen readers.
+- [ ] Use Mantine component props, spacing tokens, and theme values for ordinary appearance; do not create page-specific CSS for controls or layout.
 
 ## Tests
 
 - [ ] Add Vitest and React Testing Library if the Wails template does not include them.
 - [ ] Add a TypeScript type-check script that does not emit files.
+- [ ] Add a shared test renderer that wraps components with `MantineProvider` and any required notification portal setup.
 - [ ] Mock only the generated service boundary in component tests.
 - [ ] Test the initial empty state.
 - [ ] Test loading and disabled-button behavior.
@@ -510,12 +522,13 @@ type ProfilePoint struct {
 
 ## Shared frontend selection state
 
-- [ ] Add a small reducer/context for view interaction state.
+- [ ] Add a small typed Zustand interaction store with selector-based subscriptions.
 - [ ] Store `selectedPointIndex` as the canonical cross-view selection.
 - [ ] Distinguish persistent selection from transient hover if both are implemented.
 - [ ] Clear selection when a different track is loaded.
-- [ ] Keep loaded domain data outside the interaction reducer unless combining them materially simplifies invariants.
-- [ ] Do not add Redux, Zustand, or another state library in this phase.
+- [ ] Keep loaded Go-owned domain data outside the interaction store unless multiple views require the same frontend-owned value.
+- [ ] Keep isolated chart-local state in React rather than adding every value to Zustand.
+- [ ] Expose focused actions/selectors for point and track changes instead of letting components replace the whole store.
 
 ## SVG chart
 
@@ -721,7 +734,7 @@ Go divides the route into 2 km analysis segments. Selecting a segment highlights
 
 - [ ] Add analysis segments to the loaded-track response.
 - [ ] Regenerate bindings.
-- [ ] Add `selectedAnalysisSegmentID` to the interaction reducer.
+- [ ] Add `selectedAnalysisSegmentID` and focused selection actions to the Zustand interaction store.
 - [ ] Reset segment selection on track change.
 - [ ] Keep persistent segment selection when the pointer briefly hovers a point.
 - [ ] Define escape/clear behavior for segment selection.
@@ -1274,6 +1287,8 @@ Run this checklist at the end of every phase, using the exact scripts created by
 - [ ] Run frontend unit tests.
 - [ ] Run TypeScript type checking.
 - [ ] Run the production frontend build.
+- [ ] Confirm new application UI uses Mantine components/theme tokens and adds no avoidable custom CSS.
+- [ ] Confirm Zustand selectors do not cause unrelated map/chart panels to rerender on every pointer update.
 - [ ] Run `wails3 dev` and execute the phase's manual acceptance flow.
 - [ ] Run `wails3 build` before marking the phase complete.
 - [ ] Update the progress table and completion date.
