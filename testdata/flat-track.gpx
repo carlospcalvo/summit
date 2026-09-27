@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="summit-test"
+     xmlns="http://www.topografix.com/GPX/1/1">
+  <trk>
+    <name>Flat Track</name>
+    <trkseg>
+      <trkpt lat="45.0000" lon="6.0000">
+        <ele>100.0</ele>
+        <time>2024-06-01T08:00:00Z</time>
+      </trkpt>
+      <trkpt lat="45.0100" lon="6.0000">
+        <ele>100.0</ele>
+        <time>2024-06-01T08:00:10Z</time>
+      </trkpt>
+      <trkpt lat="45.0200" lon="6.0000">
+        <ele>100.0</ele>
+        <time>2024-06-01T08:00:20Z</time>
+      </trkpt>
+      <trkpt lat="45.0300" lon="6.0000">
+        <ele>100.0</ele>
+        <time>2024-06-01T08:00:30Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.0" creator="summit-test"
+     xmlns="http://www.topografix.com/GPX/1/0">
+  <trk>
+    <name>GPX 1.0 Track</name>
+    <trkseg>
+      <trkpt lat="45.0000" lon="6.0000">
+        <ele>100.0</ele>
+        <time>2024-06-01T08:00:00Z</time>
+      </trkpt>
+      <trkpt lat="45.0100" lon="6.0000">
+        <ele>130.0</ele>
+        <time>2024-06-01T08:00:10Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

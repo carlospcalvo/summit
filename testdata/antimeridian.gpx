@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="summit-test"
+     xmlns="http://www.topografix.com/GPX/1/1">
+  <!-- The path crosses 180 degrees, so the 2 degree gap between the first two
+       points is a short hop at the equator, not a trip around the planet. -->
+  <trk>
+    <name>Antimeridian</name>
+    <trkseg>
+      <trkpt lat="0.0000" lon="179.0000">
+        <ele>10.0</ele>
+        <time>2024-06-01T08:00:00Z</time>
+      </trkpt>
+      <trkpt lat="0.0000" lon="-179.0000">
+        <ele>12.0</ele>
+        <time>2024-06-01T08:30:00Z</time>
+      </trkpt>
+      <trkpt lat="0.5000" lon="179.5000">
+        <ele>15.0</ele>
+        <time>2024-06-01T09:00:00Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>

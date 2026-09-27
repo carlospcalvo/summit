@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gpx version="1.1" creator="summit-test"
+     xmlns="http://www.topografix.com/GPX/1/1">
+  <wpt lat="45.9237" lon="6.8694">
+    <ele>1035.0</ele>
+    <name>Chamonix Trailhead</name>
+  </wpt>
+  <trk>
+    <name>Chamonix Morning Hike</name>
+    <trkseg>
+      <trkpt lat="45.9237" lon="6.8694">
+        <ele>1035.0</ele>
+        <time>2024-06-01T08:00:00Z</time>
+      </trkpt>
+      <trkpt lat="45.9250" lon="6.8720">
+        <ele>1060.0</ele>
+        <time>2024-06-01T08:10:00Z</time>
+      </trkpt>
+      <trkpt lat="45.9270" lon="6.8760">
+        <ele>1102.0</ele>
+        <time>2024-06-01T08:22:00Z</time>
+      </trkpt>
+      <trkpt lat="45.9290" lon="6.8790">
+        <ele>1090.0</ele>
+        <time>2024-06-01T08:35:00Z</time>
+      </trkpt>
+      <trkpt lat="45.9310" lon="6.8830">
+        <ele>1140.0</ele>
+        <time>2024-06-01T08:50:00Z</time>
+      </trkpt>
+      <trkpt lat="45.9300" lon="6.8860">
+        <ele>1130.0</ele>
+        <time>2024-06-01T09:02:00Z</time>
+      </trkpt>
+    </trkseg>
+  </trk>
+</gpx>
